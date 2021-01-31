@@ -1,0 +1,128 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scenes/particles/turret_aim.tres" type="Material" id=1]
+[ext_resource path="res://scenes/player/player.gd" type="Script" id=2]
+[ext_resource path="res://assets/reference/rocket.png" type="Texture" id=3]
+[ext_resource path="res://assets/reference/hook_final.png" type="Texture" id=4]
+[ext_resource path="res://scenes/particles/thruster_r.tres" type="Material" id=5]
+[ext_resource path="res://scenes/particles/thruster_back.tres" type="Material" id=6]
+[ext_resource path="res://scenes/particles/player_explosion.tres" type="Material" id=7]
+[ext_resource path="res://assets/reference/turret.png" type="Texture" id=8]
+[ext_resource path="res://scenes/game_hud/game_hud.tscn" type="PackedScene" id=9]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 20.0545, 17.1629 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "shoot"
+tracks/0/type = "method"
+tracks/0/path = NodePath("../..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_on_hook_anim_complete"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("hook:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 0.15932, 0.287175, 1 ),
+"update": 0,
+"values": [ Vector2( -0.352417, -52.1864 ), Vector2( -0.352, -500 ), Vector2( -0.352417, -52.1864 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 55.1494, 217.625 )
+
+[node name="Player" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="rocket" type="Sprite" parent="."]
+z_index = 1
+z_as_relative = false
+texture = ExtResource( 3 )
+
+[node name="ThrustersL" type="Particles2D" parent="rocket"]
+position = Vector2( 45.6599, -0.353954 )
+rotation = 0.6353
+scale = Vector2( 10, 10 )
+z_as_relative = false
+amount = 10
+process_material = ExtResource( 5 )
+
+[node name="ThrustersR" type="Particles2D" parent="rocket"]
+position = Vector2( -45.9077, -0.221651 )
+rotation = 2.41205
+scale = Vector2( 10, 10 )
+amount = 10
+process_material = ExtResource( 5 )
+
+[node name="ThrustersBack" type="Particles2D" parent="rocket"]
+position = Vector2( 0.26902, 175.114 )
+rotation = 1.5708
+scale = Vector2( 40, 40 )
+z_as_relative = false
+amount = 20
+process_material = ExtResource( 6 )
+
+[node name="turret" type="Sprite" parent="rocket"]
+z_index = 3
+z_as_relative = false
+texture = ExtResource( 8 )
+offset = Vector2( 0, -14 )
+
+[node name="hook" type="Sprite" parent="rocket/turret"]
+position = Vector2( -0.352417, -52.1864 )
+scale = Vector2( 0.5, 0.5 )
+z_index = 2
+z_as_relative = false
+texture = ExtResource( 4 )
+
+[node name="hook_area" type="Area2D" parent="rocket/turret/hook"]
+position = Vector2( 0.704834, 104.373 )
+scale = Vector2( 2, 2 )
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rocket/turret/hook/hook_area"]
+position = Vector2( -0.176773, -58.5131 )
+shape = SubResource( 3 )
+
+[node name="aim" type="Particles2D" parent="rocket/turret"]
+position = Vector2( 0.314972, -55.4365 )
+rotation = 3.14159
+scale = Vector2( 10, 20 )
+process_material = ExtResource( 1 )
+
+[node name="hook_anim" type="AnimationPlayer" parent="rocket/turret"]
+anims/shoot = SubResource( 1 )
+
+[node name="explosion" type="Particles2D" parent="."]
+scale = Vector2( 50, 50 )
+z_index = 3
+z_as_relative = false
+emitting = false
+amount = 70
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.62
+process_material = ExtResource( 7 )
+
+[node name="ship_area" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ship_area"]
+position = Vector2( 0.176773, -0.530327 )
+shape = SubResource( 2 )
+
+[node name="HUD" parent="." instance=ExtResource( 9 )]
