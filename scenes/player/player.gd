@@ -72,6 +72,7 @@ func _process(delta):
 				aim_particles.visible = false
 				_turret_rotating = false
 				# Shoot
+				AudioManager.play_sound(AudioManager.SOUNDS.SND_HOOK)
 				hook_anim.play("shoot")
 				_shooting = true
 				
@@ -94,6 +95,11 @@ func _process(delta):
 		# Slow down after explosion...
 		_speed -= FORWARD_THRUST_DECAY * delta
 
+	
+	if ThrusterB.emitting || ThrusterL.emitting || ThrusterR.emitting:
+		AudioManager.play_sound(AudioManager.SOUNDS.SND_THRUSTER)
+	else:
+		AudioManager.stop_sound(AudioManager.SOUNDS.SND_THRUSTER)
 		
 	# never really stop in space
 	_speed = clamp(_speed, MIN_FORWARD_SPEED, MAX_FORWARD_SPEED)
@@ -115,6 +121,9 @@ func is_alive():
 func on_rock_hit(id : int) :
 	if id == body.get_instance_id() and not _exploded:
 		# Boom
+		AudioManager.play_sound(AudioManager.SOUNDS.SND_EXPLOSION)
+		AudioManager.stop_sound(AudioManager.SOUNDS.SND_THRUSTER)
+		AudioManager.stop_sound(AudioManager.SOUNDS.SND_HOOK)
 		_exploded = true
 		_shooting = false
 		_turret_rotating = false
@@ -129,6 +138,7 @@ func on_floater_hit(id : int, floater: Object) :
 		floater.bump()
 		
 	elif id == hook_body.get_instance_id():
+		AudioManager.play_sound(AudioManager.SOUNDS.SND_COLLECTED)
 		EventManager.emit_signal("floater_collected")
 		floater.queue_free()
 

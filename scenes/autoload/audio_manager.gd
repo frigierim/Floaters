@@ -7,21 +7,29 @@ const MAX_AUDIO_VOLUME : float = 1.0
 #var _bg_music = preload("res://assets/audio/POL-happy-tribe-short.ogg")
 
 onready var _music_player = AudioStreamPlayer.new()
-onready var _sfx_player = AudioStreamPlayer.new()
+onready var _sfx_players = [
+							AudioStreamPlayer.new(),
+							AudioStreamPlayer.new(),
+							AudioStreamPlayer.new(),
+							AudioStreamPlayer.new()
+]
 
 
-enum SOUNDS { SND_ELEPHANT, SND_AMANI, SND_LION }
+enum SOUNDS { SND_COLLECTED, SND_EXPLOSION, SND_HOOK, SND_THRUSTER }
 
-var sound_names : Array = [ "res://assets/audio/elephant.ogg",
-							"res://assets/audio/amani.ogg",
-							"res://assets/audio/lion.ogg"  ]
+var sound_names : Array = [ "res://assets/sounds/collected.wav",
+							"res://assets/sounds/explosion.wav",
+							"res://assets/sounds/hook.wav",
+							"res://assets/sounds/thruster.wav"  ]
 var sounds : Array = []		
 
 func _ready():
 	self.pause_mode = Node.PAUSE_MODE_PROCESS
 	EventManager.connect("change_volume", self, "on_change_volume")
 	self.add_child(_music_player);
-	self.add_child(_sfx_player);
+	
+	for i in range(len(_sfx_players)):
+		self.add_child(_sfx_players[i]);
 	
 	#_music_player.stream = _bg_music
 
@@ -29,7 +37,9 @@ func _ready():
 	
 	for i in sound_names:
 		sounds.append(load(i))
-
+		var idx = len(sounds) - 1
+		_sfx_players[idx].stream = sounds[idx]
+		
 	on_change_volume(vol)
 
 func on_change_volume(volume : float):
@@ -42,13 +52,18 @@ func on_change_volume(volume : float):
 			_music_player.play()
 
 	_music_player.volume_db = linear2db(volume)
-	_sfx_player.volume_db = linear2db(volume)
+	
+	for i in range(len(_sfx_players)):
+		_sfx_players[i].volume_db = linear2db(volume)
+		
 	GameData.set_music_volume(volume)
 
 func play_sound(index : int):
 	
-	if index < sounds.size():
-		_sfx_player.stop()
-		_sfx_player.stream = sounds[index]
-		_sfx_player.play()
+	if index < sounds.size() and ! _sfx_players[index].is_playing():
+		_sfx_players[index].play()
 	
+func stop_sound(index : int):
+	
+	if index < sounds.size() and _sfx_players[index].is_playing():
+		_sfx_players[index].stop()
