@@ -17,29 +17,29 @@ uniform_name = "ScrollOffset"
 
 [sub_resource type="VisualShaderNodeVectorOp" id=5]
 
-[sub_resource type="VisualShaderNodeColorOp" id=12]
+[sub_resource type="VisualShaderNodeColorOp" id=6]
 operator = 7
 
-[sub_resource type="VisualShaderNodeVec3Constant" id=13]
+[sub_resource type="VisualShaderNodeVec3Constant" id=7]
 constant = Vector3( 2, 2, 3 )
 
-[sub_resource type="VisualShaderNodeInput" id=6]
+[sub_resource type="VisualShaderNodeInput" id=8]
 input_name = "uv"
 
-[sub_resource type="VisualShaderNodeTexture" id=7]
+[sub_resource type="VisualShaderNodeTexture" id=9]
 output_port_for_preview = 0
 texture = ExtResource( 1 )
 
-[sub_resource type="VisualShaderNodeInput" id=8]
+[sub_resource type="VisualShaderNodeInput" id=10]
 output_port_for_preview = 0
 input_name = "time"
 
-[sub_resource type="VisualShaderNodeVectorOp" id=9]
+[sub_resource type="VisualShaderNodeVectorOp" id=11]
 operator = 2
 
-[sub_resource type="VisualShaderNodeVectorOp" id=10]
+[sub_resource type="VisualShaderNodeVectorOp" id=12]
 
-[sub_resource type="VisualShader" id=11]
+[sub_resource type="VisualShader" id=13]
 code = "shader_type canvas_item;
 uniform vec3 ScrollOffset;
 uniform vec3 ScrollSpeed;
@@ -131,15 +131,15 @@ void light() {
 mode = 1
 flags/light_only = false
 nodes/fragment/0/position = Vector2( 2120, 160 )
-nodes/fragment/2/node = SubResource( 6 )
+nodes/fragment/2/node = SubResource( 8 )
 nodes/fragment/2/position = Vector2( 220, 420 )
-nodes/fragment/5/node = SubResource( 7 )
+nodes/fragment/5/node = SubResource( 9 )
 nodes/fragment/5/position = Vector2( 1580, 200 )
-nodes/fragment/6/node = SubResource( 8 )
+nodes/fragment/6/node = SubResource( 10 )
 nodes/fragment/6/position = Vector2( 140, 180 )
-nodes/fragment/8/node = SubResource( 9 )
+nodes/fragment/8/node = SubResource( 11 )
 nodes/fragment/8/position = Vector2( 580, 160 )
-nodes/fragment/9/node = SubResource( 10 )
+nodes/fragment/9/node = SubResource( 12 )
 nodes/fragment/9/position = Vector2( 680, 380 )
 nodes/fragment/10/node = SubResource( 1 )
 nodes/fragment/10/position = Vector2( 1300, 260 )
@@ -151,13 +151,13 @@ nodes/fragment/13/node = SubResource( 4 )
 nodes/fragment/13/position = Vector2( 760, 80 )
 nodes/fragment/14/node = SubResource( 5 )
 nodes/fragment/14/position = Vector2( 1020, 220 )
-nodes/fragment/15/node = SubResource( 12 )
+nodes/fragment/15/node = SubResource( 6 )
 nodes/fragment/15/position = Vector2( 1880, 140 )
-nodes/fragment/16/node = SubResource( 13 )
+nodes/fragment/16/node = SubResource( 7 )
 nodes/fragment/16/position = Vector2( 1800, 500 )
 nodes/fragment/connections = PoolIntArray( 8, 0, 9, 0, 11, 0, 10, 1, 10, 0, 5, 0, 12, 0, 8, 0, 13, 0, 14, 0, 9, 0, 14, 1, 14, 0, 10, 0, 6, 0, 8, 1, 2, 0, 9, 1, 5, 0, 15, 0, 15, 0, 0, 0, 16, 0, 15, 1 )
 
 [resource]
-shader = SubResource( 11 )
+shader = SubResource( 13 )
 shader_param/ScrollOffset = null
 shader_param/ScrollSpeed = Vector3( 0, 0.01, 0 )

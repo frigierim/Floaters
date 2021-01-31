@@ -30,6 +30,7 @@ func on_changed_speed(newSpeed : Vector2):
 func _process(delta):
 	self.translate(_speed * delta)
 	self.rotate(_rotation_speed)
+	
 
 func _on_area_entered(area : Area2D):
 	EventManager.emit_signal("floater_hit", area.get_instance_id(), self)

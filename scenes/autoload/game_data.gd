@@ -155,7 +155,7 @@ func spawn_floaters(parentObject : Node2D, numFloaters : int, bounds : Rect2):
 		parentObject.add_child(new_floater)
 		
 
-func restart_level(parentObject : Node2D, bounds : Rect2):
+func restart_level(rocksParent : Node2D, floatersParent : Node2D, bounds : Rect2):
 		
 		var level = get_level()
 		bounds = bounds.grow(bounds.size.x * BOUNDS_EXTENDERS[level])
@@ -167,8 +167,8 @@ func restart_level(parentObject : Node2D, bounds : Rect2):
 		else:
 			set_num_floaters(floaters)
 			
-		spawn_floaters(parentObject, floaters, bounds )
-		spawn_rocks(parentObject, ROCKS[level], bounds)
+		spawn_floaters(floatersParent, floaters, bounds )
+		spawn_rocks(rocksParent, ROCKS[level], bounds)
 		set_energy(100.0)
 		EventManager.emit_signal("energy_changed")
 		EventManager.emit_signal("floater_num_changed")

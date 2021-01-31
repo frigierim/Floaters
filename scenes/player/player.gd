@@ -112,7 +112,11 @@ func _process(delta):
 	
 	_offset += newSpeed
 	EventManager.emit_signal("changed_position", _offset)
-
+	
+func get_offset():
+	return _offset
+	
+	
 func _on_hook_anim_complete():
 	_shooting = false
 

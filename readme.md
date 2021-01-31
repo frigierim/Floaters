@@ -17,5 +17,4 @@ A GGJ 2021 entry by MaxFri (freeg@inwind.it)
 
 Proper QA!
 Due to lack of resources, balancing the game was not possible.
-A proper finale is missing too, and I also wanted to add a radar hud to identify the floaters location. 
-Sorry, you'll have to wait for the sequel!
+A proper finale is missing too; sorry, you'll have to wait for the sequel!
