@@ -41,6 +41,7 @@ func _ready():
 	aim_particles.emitting = false
 	EventManager.connect("rock_hit", self, "on_rock_hit")
 	EventManager.connect("floater_hit", self, "on_floater_hit")
+	EventManager.connect("energy_exhausted", self, "on_energy_exhausted")
 	
 func _process(delta):
 	
@@ -131,7 +132,14 @@ func on_rock_hit(id : int) :
 		explosion.emitting = true
 		EventManager.emit_signal("game_over")
 
-		
+func on_energy_exhausted():
+		_exploded = true
+		_shooting = false
+		_turret_rotating = false
+		rocket.visible = false
+		EventManager.emit_signal("game_over")
+	
+	
 func on_floater_hit(id : int, floater: Object) :
 	if id == body.get_instance_id() and not _exploded:
 		#splat floater

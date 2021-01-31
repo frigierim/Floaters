@@ -17,7 +17,7 @@ func _ready():
 	EventManager.connect("changed_position", self, "_on_position_changed")
 	EventManager.connect("game_over", self, "_on_game_over")
 	EventManager.connect("round_complete", self, "_on_round_complete")
-	
+
 	intro_timer.connect("timeout", self, "_on_intro_timer_complete")
 	begin_round()
 
@@ -29,6 +29,7 @@ func _on_position_changed(newOffset : Vector2):
 	var mat = bkgnd.get_material()
 	var newVect = Vector3(newOffset.x, -newOffset.y, 0) * bg_speed_scale
 	mat.set_shader_param("ScrollOffset", newVect)
+	
 
 func _on_game_over():
 	gameovermenu.show()

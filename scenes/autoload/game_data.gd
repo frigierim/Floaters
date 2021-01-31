@@ -14,7 +14,7 @@ var default_user_data : Dictionary = {
 
 var MAX_LEVELS = 5
 
-var ENERGY_DRAW : float = 0.05
+var ENERGY_DRAW : float = 0.03
 
 # TBD: Balance something :D
 
