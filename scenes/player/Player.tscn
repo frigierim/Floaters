@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scenes/particles/turret_aim.tres" type="Material" id=1]
 [ext_resource path="res://scenes/player/player.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scenes/particles/thruster_back.tres" type="Material" id=6]
 [ext_resource path="res://scenes/particles/player_explosion.tres" type="Material" id=7]
 [ext_resource path="res://assets/reference/turret.png" type="Texture" id=8]
+[ext_resource path="res://assets/reference/floater.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20.0545, 17.1629 )
@@ -40,6 +41,17 @@ tracks/1/keys = {
 "values": [ Vector2( -0.352417, -52.1864 ), Vector2( -0.352, -500 ), Vector2( -0.352417, -52.1864 ) ]
 }
 
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 0.1
+angular_velocity = 11.47
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 55.1494, 217.625 )
 
@@ -52,17 +64,18 @@ z_as_relative = false
 texture = ExtResource( 3 )
 
 [node name="ThrustersL" type="Particles2D" parent="rocket"]
-position = Vector2( 45.6599, -0.353954 )
-rotation = 0.6353
+position = Vector2( 29.9455, -163.111 )
+rotation = 0.174533
 scale = Vector2( 10, 10 )
 z_as_relative = false
 amount = 10
 process_material = ExtResource( 5 )
 
 [node name="ThrustersR" type="Particles2D" parent="rocket"]
-position = Vector2( -45.9077, -0.221651 )
-rotation = 2.41205
+position = Vector2( -30.1933, -163.54 )
+rotation = 2.96706
 scale = Vector2( 10, 10 )
+z_as_relative = false
 amount = 10
 process_material = ExtResource( 5 )
 
@@ -115,6 +128,16 @@ lifetime = 0.8
 one_shot = true
 explosiveness = 0.62
 process_material = ExtResource( 7 )
+
+[node name="floaters_explosion" type="Particles2D" parent="."]
+scale = Vector2( 0.1, 0.1 )
+emitting = false
+lifetime = 200.0
+one_shot = true
+speed_scale = 20.0
+explosiveness = 0.98
+process_material = SubResource( 4 )
+texture = ExtResource( 9 )
 
 [node name="ship_area" type="Area2D" parent="."]
 collision_mask = 2

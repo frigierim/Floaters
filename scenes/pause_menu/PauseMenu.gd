@@ -13,4 +13,5 @@ func _on_btnContinue_pressed():
 	hide()
 
 func _on_btnQuit_pressed():
+	hide()
 	get_tree().change_scene("res://scenes/mainmenu/mainmenu.tscn")

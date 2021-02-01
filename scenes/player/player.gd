@@ -17,6 +17,7 @@ var _turret_rotation : float
 var _shooting : bool
 var _hook_base_position : Vector2
 var _exploded : bool = false
+var _collected_floaters : int
 
 onready var ThrusterR = get_node("rocket/ThrustersR")
 onready var ThrusterL = get_node("rocket/ThrustersL")
@@ -29,16 +30,22 @@ onready var body = get_node("ship_area")
 onready var hook_body = get_node("rocket/turret/hook/hook_area")
 onready var explosion = get_node("explosion")
 onready var rocket = get_node("rocket")
+onready var floaters_explosion = get_node("floaters_explosion")
+
 
 func _ready():
 	rocket.visible = true
 	_turret_rotating = false
 	_shooting = false
 	_speed = 0.0
+	_collected_floaters = 0
 	_hook_base_position = hook.position
 	# Align the Y axis correctly
 	_rotation = deg2rad(-90.0)
 	aim_particles.emitting = false
+	floaters_explosion.emitting = false
+	explosion.emitting = false
+	
 	EventManager.connect("rock_hit", self, "on_rock_hit")
 	EventManager.connect("floater_hit", self, "on_floater_hit")
 	EventManager.connect("energy_exhausted", self, "on_energy_exhausted")
@@ -134,6 +141,8 @@ func on_rock_hit(id : int) :
 		_turret_rotating = false
 		rocket.visible = false
 		explosion.emitting = true
+		floaters_explosion.amount = _collected_floaters+1
+		floaters_explosion.emitting = true
 		EventManager.emit_signal("game_over")
 
 func on_energy_exhausted():
@@ -152,5 +161,6 @@ func on_floater_hit(id : int, floater: Object) :
 	elif id == hook_body.get_instance_id():
 		AudioManager.play_sound(AudioManager.SOUNDS.SND_COLLECTED)
 		EventManager.emit_signal("floater_collected")
+		_collected_floaters += 1
 		floater.queue_free()
 
